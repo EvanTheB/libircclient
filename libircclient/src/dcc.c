@@ -737,7 +737,9 @@ static void libirc_dcc_request (irc_session_t * session, const char * nick, cons
 
 		return;
 	}
-	else if ( sscanf (req, "DCC SEND %s %lu %hu %lu", filenamebuf, &ip, &port, &size) == 4 )
+	else if (
+		   sscanf (req, "DCC SEND \"%[^\"]\" %lu %hu %lu", filenamebuf, &ip, &port, &size) == 4
+		|| sscanf (req, "DCC SEND %s %lu %hu %lu", filenamebuf, &ip, &port, &size) == 4 )
 	{
 		if ( session->callbacks.event_dcc_send_req )
 		{
